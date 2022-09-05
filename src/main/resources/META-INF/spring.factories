@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.sogorae.jpaquerycounter.config.SpringConfig,com.sogorae.jpaquerycounter.config.WebConfig
