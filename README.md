@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.beomWhale:slack-send-exception:1.0.0'
+    implementation 'com.github.sogorae:jpa-query-counter:1.0.0'
 }
 ```
 
