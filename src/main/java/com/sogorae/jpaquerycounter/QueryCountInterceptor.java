@@ -2,6 +2,10 @@ package com.sogorae.jpaquerycounter;
 
 import static java.lang.System.currentTimeMillis;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -27,13 +31,31 @@ public class QueryCountInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(final HttpServletRequest request, final HttpServletResponse response,
-                                final Object handler, final Exception ex)
-            throws Exception {
+                                final Object handler, final Exception ex) {
         Counter counter = jpaInspector.getCount();
         long duration = currentTimeMillis() - counter.getTime();
         long count = counter.getCount().get();
-        log.info("time : {}, count : {} , url : {}", duration, count, request.getRequestURI());
+        String result = getSqlQueriesResult(request, duration, count);
+        log.info("query result :\n{}", result);
         jpaInspector.clear();
-        HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
+        outputFile(result);
+    }
+
+    private String getSqlQueriesResult(final HttpServletRequest request, final long duration, final long count) {
+        String result = jpaInspector.getResult();
+        result = "\n" + "time : " + duration + "\n" + "count : " + count + "\n" + "url : " + request.getRequestURI()
+                + "\n" + result + "\n";
+        return result;
+    }
+
+    private void outputFile(String result) {
+        LocalDateTime now = LocalDateTime.now();
+        String fileName = now.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초"));
+        try(BufferedWriter fw = new BufferedWriter(new FileWriter(fileName, true))) {
+            fw.write(result);
+            fw.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
