@@ -50,7 +50,7 @@ public class QueryCountInterceptor implements HandlerInterceptor {
 
     private void outputFile(String result) {
         LocalDateTime now = LocalDateTime.now();
-        String fileName = now.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초"));
+        String fileName = now.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분"));
         try(BufferedWriter fw = new BufferedWriter(new FileWriter(fileName, true))) {
             fw.write(result);
             fw.flush();

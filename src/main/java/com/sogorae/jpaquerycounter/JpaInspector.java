@@ -54,7 +54,7 @@ public class JpaInspector implements StatementInspector {
 
     private boolean warningQuery() {
         long count = sqlQueries.stream()
-                .filter(i -> i.contains("JOIN"))
+                .filter(i -> i.toLowerCase().contains("join"))
                 .count();
         return count > 2;
     }
