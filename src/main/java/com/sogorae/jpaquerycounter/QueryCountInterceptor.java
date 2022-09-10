@@ -32,26 +32,23 @@ public class QueryCountInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(final HttpServletRequest request, final HttpServletResponse response,
                                 final Object handler, final Exception ex) {
-        Counter counter = jpaInspector.getCount();
-        long duration = currentTimeMillis() - counter.getTime();
-        long count = counter.getCount().get();
-        String result = getSqlQueriesResult(request, duration, count);
+        long duration = jpaInspector.getDuration(currentTimeMillis());
+        String result = getSqlQueriesResult(request, duration, jpaInspector.getQueriesResult());
         log.info("query result :\n{}", result);
         jpaInspector.clear();
         outputFile(result);
     }
 
-    private String getSqlQueriesResult(final HttpServletRequest request, final long duration, final long count) {
-        String result = jpaInspector.getResult();
-        result = "\n" + "time : " + duration + "\n" + "count : " + count + "\n" + "url : " + request.getRequestURI()
-                + "\n" + result + "\n";
-        return result;
+    private String getSqlQueriesResult(final HttpServletRequest request, final long duration, final String result) {
+        String url = "url: " + request.getMethod() + " " + request.getRequestURI() + "\n";
+        String time = "time: " + duration + "\n";
+        return url + time + result;
     }
 
     private void outputFile(String result) {
         LocalDateTime now = LocalDateTime.now();
-        String fileName = now.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분"));
-        try(BufferedWriter fw = new BufferedWriter(new FileWriter(fileName, true))) {
+        String fileName = now.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"));
+        try (BufferedWriter fw = new BufferedWriter(new FileWriter(fileName, true))) {
             fw.write(result);
             fw.flush();
         } catch (Exception e) {
