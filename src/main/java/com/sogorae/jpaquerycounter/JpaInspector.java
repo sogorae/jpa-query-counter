@@ -1,6 +1,7 @@
 package com.sogorae.jpaquerycounter;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import org.hibernate.resource.jdbc.spi.StatementInspector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +23,10 @@ public class JpaInspector implements StatementInspector {
     @Override
     public String inspect(final String sql) {
         log.info("sql = " + sql);
-        QueryCounter queryCounter1 = queryCounters.get();
-        queryCounter1.addQueryCounting(sql);
+        QueryCounter queryCounter = queryCounters.get();
+        if (Objects.nonNull(queryCounter)) {
+            queryCounter.addQueryCounting(sql);
+        }
         return sql;
     }
 
