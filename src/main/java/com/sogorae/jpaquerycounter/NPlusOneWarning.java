@@ -28,11 +28,13 @@ public class NPlusOneWarning {
         return false;
     }
 
-    private static Map<String, Integer> createNPlusOneWaring(final List<String> sql) {
+    private static Map<String, Integer> createNPlusOneWaring(final List<String> sqlQueries) {
         final Map<String, Integer> nPlusOneWaring = new HashMap<>();
-        sql.stream()
-                .filter(i -> i.contains(WARNING_STANDARD_WARDING))
-                .forEach(i -> nPlusOneWaring.put(i, nPlusOneWaring.getOrDefault(i, 0) + 1));
+        for (String query : sqlQueries) {
+            if (query.contains(WARNING_STANDARD_WARDING)) {
+                nPlusOneWaring.put(query, nPlusOneWaring.getOrDefault(query, 0) + 1);
+            }
+        }
         return nPlusOneWaring;
     }
 }
