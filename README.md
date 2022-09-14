@@ -22,4 +22,4 @@ dependencies {
 ```
 
 ### 사용 결과
-<img width="446" alt="image" src="https://user-images.githubusercontent.com/48307960/188691153-f3fe07bb-1e68-484d-a41e-71cc3fcae53a.png">
+<img width="1334" alt="image" src="https://user-images.githubusercontent.com/48307960/190221514-d7194648-8f04-4613-83a7-b472379c3ee7.png">
