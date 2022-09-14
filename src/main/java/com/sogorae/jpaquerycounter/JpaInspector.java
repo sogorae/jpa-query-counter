@@ -32,7 +32,7 @@ public class JpaInspector implements StatementInspector {
 
     public String getQueriesResult() {
         QueryCounter queryCounter = queryCounters.get();
-        return  "count : " + queryCounter.getCount() + "\n" + queryCounter.getQueriesToString() + "\n\n";
+        return  "count : " + queryCounter.getCount() + "\n" + queryCounter.getResult();
     }
 
     public long getDuration(final long currentTimeMillis) {
