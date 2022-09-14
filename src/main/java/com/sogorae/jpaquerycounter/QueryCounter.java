@@ -19,8 +19,9 @@ public class QueryCounter {
         count++;
     }
 
-    public String getQueriesToString() {
-        return String.join("\n", queries);
+    public String getResult() {
+        String result = String.join("\n", queries);
+        return result + NPlusOneWarning.getWarningMessage(queries);
     }
 
     public int getCount() {
