@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.sogorae:jpa-query-counter:1.0.2'
+    implementation 'com.github.sogorae:jpa-query-counter:1.0.3'
 }
 ```
 
