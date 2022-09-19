@@ -1,11 +1,16 @@
 package com.sogorae.jpaquerycounter.config;
 
-import com.sogorae.jpaquerycounter.JpaInspector;
-import com.sogorae.jpaquerycounter.QueryCountInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+
+import com.sogorae.jpaquerycounter.JpaInspector;
+import com.sogorae.jpaquerycounter.QueryCountInterceptor;
 
 @Configuration
+@PropertySource(
+    value = "classpath:application-jpaquerycounter.properties"
+)
 public class SpringConfig {
 
     @Bean
