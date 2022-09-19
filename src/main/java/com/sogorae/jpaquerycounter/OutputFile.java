@@ -12,8 +12,8 @@ import java.util.Arrays;
 
 class OutputFile {
 
-    static final String RESULT_SEPARATOR = String.format("---%s", System.lineSeparator());
-    static final String LINE_SEPARATOR = System.lineSeparator();
+    static final String RESULT_SEPARATOR = String.format("---%s", "\n");
+    static final String LINE_SEPARATOR = "\n";
 
     private static final String FILE_NAME = LocalDateTime.now()
         .format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"));
@@ -55,8 +55,8 @@ class OutputFile {
             return false;
         }
 
-        String[] results = file.split(RESULT_SEPARATOR);
-        return Arrays.stream(results)
+        String[] elements = file.split(RESULT_SEPARATOR);
+        return Arrays.stream(elements)
             .anyMatch(element ->
                 result.split(LINE_SEPARATOR)[0].equals(element.split(LINE_SEPARATOR)[0]));
     }
