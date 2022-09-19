@@ -4,9 +4,9 @@ import java.util.List;
 
 public class QueryCounter {
 
-    private int count;
     private final long time;
     private final List<String> queries;
+    private int count;
 
     public QueryCounter(final int count, final long time, final List<String> queries) {
         this.count = count;
@@ -21,7 +21,7 @@ public class QueryCounter {
 
     public String getResult() {
         String result = String.join("\n", queries);
-        return result + NPlusOneWarning.getWarningMessage(queries);
+        return result + NPlusOneWarning.getWarningMessage(queries) + "---";
     }
 
     public int getCount() {
