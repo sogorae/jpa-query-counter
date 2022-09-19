@@ -1,5 +1,6 @@
 package com.sogorae.jpaquerycounter;
 
+import static com.sogorae.jpaquerycounter.OutputFile.*;
 import static java.lang.System.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,19 +37,16 @@ public class QueryCountInterceptor implements HandlerInterceptor {
             return;
         }
         long duration = jpaInspector.getDuration(currentTimeMillis());
-        String result = getSqlQueriesResult(request, duration, jpaInspector.getQueriesResult());
-        log.info("query result :\n{}", result);
+        String result = generateSqlQueriesResult(request, duration, jpaInspector.getQueriesResult());
+        log.info("query result :{}{}", LINE_SEPARATOR, result);
         jpaInspector.clear();
-        outputFile(result);
+        outputFile.write(result);
     }
 
-    private String getSqlQueriesResult(final HttpServletRequest request, final long duration, final String result) {
-        String url = "url: " + request.getMethod() + " " + request.getRequestURI() + "\n";
-        String time = "time: " + duration + "\n";
-        return url + time + result;
-    }
-
-    private void outputFile(String result) {
-        outputFile.outputFile(result);
+    private String generateSqlQueriesResult(final HttpServletRequest request, final long duration,
+        final String queryResult) {
+        String url = "url: " + request.getMethod() + " " + request.getRequestURI() + LINE_SEPARATOR;
+        String time = "time: " + duration + LINE_SEPARATOR;
+        return url + time + queryResult;
     }
 }

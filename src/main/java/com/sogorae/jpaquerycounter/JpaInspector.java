@@ -1,7 +1,10 @@
 package com.sogorae.jpaquerycounter;
 
+import static com.sogorae.jpaquerycounter.OutputFile.*;
+
 import java.util.ArrayList;
 import java.util.Objects;
+
 import org.hibernate.resource.jdbc.spi.StatementInspector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +35,7 @@ public class JpaInspector implements StatementInspector {
 
     public String getQueriesResult() {
         QueryCounter queryCounter = queryCounters.get();
-        return  "count : " + queryCounter.getCount() + "\n" + queryCounter.getResult();
+        return "count : " + queryCounter.getCount() + LINE_SEPARATOR + queryCounter.getResult();
     }
 
     public long getDuration(final long currentTimeMillis) {
