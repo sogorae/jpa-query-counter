@@ -17,9 +17,14 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.sogorae:jpa-query-counter:1.0.4'
+    implementation 'com.github.sogorae:jpa-query-counter:1.0.5'
 }
 ```
 
 ### 사용 결과
 <img width="1334" alt="image" src="https://user-images.githubusercontent.com/48307960/190221514-d7194648-8f04-4613-83a7-b472379c3ee7.png">
+
+
+### 이슈
+- SpringInterceptor에 의해 실행되는 쿼리는 인식하지 못하는 것으로 추정.
+- Hibernate를 사용하지 않는 쿼리의 경우 카운트에 포함되지 않음.
