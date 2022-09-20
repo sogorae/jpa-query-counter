@@ -13,13 +13,12 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class QueryCountInterceptor implements HandlerInterceptor {
 
     private static final Logger log = LoggerFactory.getLogger(JpaInspector.class);
+    private static final Results RESULTS = Results.getInstance();
 
     private final JpaInspector jpaInspector;
-    private final OutputFile outputFile;
 
     public QueryCountInterceptor(final JpaInspector jpaInspector) {
         this.jpaInspector = jpaInspector;
-        this.outputFile = new OutputFile();
     }
 
     @Override
@@ -40,7 +39,7 @@ public class QueryCountInterceptor implements HandlerInterceptor {
         String result = generateSqlQueriesResult(request, duration, jpaInspector.getQueriesResult());
         log.info("query result :{}{}", LINE_SEPARATOR, result);
         jpaInspector.clear();
-        outputFile.write(result);
+        RESULTS.addResult(result);
     }
 
     private String generateSqlQueriesResult(final HttpServletRequest request, final long duration,

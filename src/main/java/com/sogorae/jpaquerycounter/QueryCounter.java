@@ -23,8 +23,7 @@ public class QueryCounter {
 
     public String getResult() {
         String result = String.join(LINE_SEPARATOR, queries);
-        return result + NPlusOneWarning.getWarningMessage(queries) +
-            RESULT_SEPARATOR;
+        return result + NPlusOneWarning.getWarningMessage(queries) + RESULT_SEPARATOR;
     }
 
     public int getCount() {

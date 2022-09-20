@@ -1,14 +1,10 @@
 package com.sogorae.jpaquerycounter;
 
 import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 
 class OutputFile {
 
@@ -16,48 +12,24 @@ class OutputFile {
     static final String LINE_SEPARATOR = "\n";
 
     private static final String FILE_NAME = LocalDateTime.now()
-        .format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"));
-
-    private final String file;
-
-    OutputFile() {
-        this.file = read();
-    }
+        .format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 결과"));
 
     void write(String result) {
-        if (hasDuplicatedApi(result)) {
-            return;
-        }
-        try (BufferedWriter fw = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
-            fw.write(result);
-            fw.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private String read() {
-        Path path = Path.of(FILE_NAME);
-        if (!Files.exists(path)) {
-            return "";
-        }
-        try {
-            return Files.readString(path, StandardCharsets.UTF_8);
+        try (PrintWriter writer = new PrintWriter(FILE_NAME)) {
+            eraseFile(writer);
+            writeFile(result, writer);
         } catch (IOException e) {
-            e.printStackTrace();
             throw new IllegalArgumentException(e.getMessage());
         }
     }
 
-    private boolean hasDuplicatedApi(String result) {
-        assert result != null;
-        if (file.isEmpty()) {
-            return false;
-        }
+    private void eraseFile(final PrintWriter writer) {
+        writer.print("");
+    }
 
-        String[] elements = file.split(RESULT_SEPARATOR);
-        return Arrays.stream(elements)
-            .anyMatch(element ->
-                result.split(LINE_SEPARATOR)[0].equals(element.split(LINE_SEPARATOR)[0]));
+    private void writeFile(final String result, final PrintWriter writer) throws IOException {
+        BufferedWriter bufferedWriter = new BufferedWriter(writer);
+        bufferedWriter.write(result);
+        bufferedWriter.flush();
     }
 }
