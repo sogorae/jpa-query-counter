@@ -22,16 +22,16 @@ public class QueryCountInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler)
-        throws Exception {
+    public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response,
+        final Object handler) {
         jpaInspector.start();
-        return HandlerInterceptor.super.preHandle(request, response, handler);
+        return true;
     }
 
     @Override
     public void afterCompletion(final HttpServletRequest request, final HttpServletResponse response,
         final Object handler, final Exception ex) {
-        if (ex != null) {
+        if (isExceptionThrown(ex)) {
             log.info("Exception: {}", ex.getMessage());
             return;
         }
@@ -40,6 +40,10 @@ public class QueryCountInterceptor implements HandlerInterceptor {
         log.info("query result :{}{}", LINE_SEPARATOR, result);
         jpaInspector.clear();
         RESULTS.addResult(result);
+    }
+
+    private boolean isExceptionThrown(final Exception ex) {
+        return ex != null;
     }
 
     private String generateSqlQueriesResult(final HttpServletRequest request, final long duration,
