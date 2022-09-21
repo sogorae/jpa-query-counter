@@ -22,7 +22,7 @@ dependencies {
 ```
 
 ### 사용 결과
-<img width="1334" alt="image" src="https://user-images.githubusercontent.com/48307960/190221514-d7194648-8f04-4613-83a7-b472379c3ee7.png">
+<img width="962" alt="image" src="https://user-images.githubusercontent.com/48307960/191501803-fc20b73b-27b4-41a3-8cf2-3657f5392cff.png">
 
 
 ### 이슈
