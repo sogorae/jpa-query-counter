@@ -8,7 +8,7 @@ public class NPlusOneWarning {
 
     private static final int WARNING_STANDARD_COUNT = 2;
     private static final String WARNING_STANDARD_WARDING = "select";
-    private static final String WARNING_MESSAGE = "\nN+1이 의심됩니다.";
+    private static final String WARNING_MESSAGE = "\n동일한 select 쿼리문이 2개 이상 발생합니다. \nN+1 문제 혹은 로직 개선이 필요해 보입니다.";
     private static final String LINE_BREAK = "\n\n";
 
     public static String getWarningMessage(List<String> sql) {
